@@ -4,10 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Application {
 
@@ -40,10 +38,8 @@ public class Application {
   }
 
   public static void main(String[] args) throws Exception {
-    List<Employer> allEmployers = readFile("employers.csv", Employer.class);
-    List<Department> departments = readFile("departments.csv", Department.class);
-    List<Employer> joined = join(allEmployers, departments);
-    joined.forEach(System.out::println);
+    join(readFile("employers.csv", Employer.class), readFile("departments.csv", Department.class))
+            .forEach(System.out::println);
   }
 
 }
