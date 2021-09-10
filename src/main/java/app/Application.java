@@ -3,6 +3,7 @@ package app;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Constructor;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,9 +38,16 @@ public class Application {
             .collect(Collectors.toList());
   }
 
-  public static void main(String[] args) throws Exception {
-    join(readFile("employers.csv", Employer.class), readFile("departments.csv", Department.class))
-            .forEach(System.out::println);
+  public static void main(String[] args) {
+    try{
+      List<Employer> allEmployers = readFile("employers.csv", Employer.class);
+      List<Department> departments = readFile("departments.csv", Department.class);
+      List<Employer> joined = join(allEmployers, departments);
+      joined.forEach(System.out::println);
+    } catch (Exception e){
+      System.out.printf("File is broken or not found, %s \n", e);
+    }
+
   }
 
 }
