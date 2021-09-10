@@ -3,7 +3,6 @@ package app;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Constructor;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +46,6 @@ public class Application {
     } catch (Exception e){
       System.out.printf("File is broken or not found, %s \n", e);
     }
-
   }
 
 }
