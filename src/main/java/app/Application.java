@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 public class Application {
 
   public static <T> List<T> readFile(String fileName, Class<T> type) throws Exception {
-    BufferedReader bf = new BufferedReader(new FileReader(fileName));
-    List<T> array = new ArrayList<>();
-    String oneLine;
-    while ((oneLine = bf.readLine()) != null) {
-      String[] line = oneLine.split(";");
-      Constructor<?> constructorWithParams = type.getDeclaredConstructors()[0];
-      if (constructorWithParams.getParameterCount() == line.length) {
-        T entity = (T) constructorWithParams.newInstance(line);
-        array.add(entity);
+    try(BufferedReader bf = new BufferedReader(new FileReader(fileName))) {
+      List<T> array = new ArrayList<>();
+      String oneLine;
+      while ((oneLine = bf.readLine()) != null) {
+        String[] line = oneLine.split(";");
+        Constructor<?> constructorWithParams = type.getDeclaredConstructors()[0];
+        if (constructorWithParams.getParameterCount() == line.length) {
+          T entity = (T) constructorWithParams.newInstance(line);
+          array.add(entity);
+        }
       }
+      array.remove(0);
+      return array;
     }
-    bf.close();
-    array.remove(0);
-    return array;
   }
 
   public static List<Employer> join(List<Employer> employers, List<Department> departments) {
